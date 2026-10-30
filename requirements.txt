@@ -1,0 +1,9 @@
+# Python dependencies for SynFlow engine (SUMO/TraCI controllers)
+# SUMO itself is a system binary, NOT a pip package.
+# Install SUMO separately: apt install sumo (Linux) or download from sumo.dlr.de (Windows)
+numpy
+pandas
+torch
+joblib
+scikit-learn==1.6.1
+traci

@@ -1,0 +1,98 @@
+{
+    "north_waiting": {
+        "lower": 0.0,
+        "upper": 53.16861904761906
+    },
+    "north_queue": {
+        "lower": 0.0,
+        "upper": 36.0
+    },
+    "north_arrivals": {
+        "lower": 0.0,
+        "upper": 3.0
+    },
+    "north_density": {
+        "lower": 0.0,
+        "upper": 72.51381215469613
+    },
+    "north_speed": {
+        "lower": 0.0,
+        "upper": 15.098630946274504
+    },
+    "north_pressure": {
+        "lower": 0.0,
+        "upper": 38.59479217273954
+    },
+    "south_waiting": {
+        "lower": 0.0,
+        "upper": 54.0
+    },
+    "south_queue": {
+        "lower": 0.0,
+        "upper": 36.0
+    },
+    "south_arrivals": {
+        "lower": 0.0,
+        "upper": 3.0
+    },
+    "south_density": {
+        "lower": 0.0,
+        "upper": 72.51381215469613
+    },
+    "south_speed": {
+        "lower": 0.0,
+        "upper": 15.087660875305266
+    },
+    "south_pressure": {
+        "lower": 0.0,
+        "upper": 38.85599273255814
+    },
+    "east_waiting": {
+        "lower": 0.0,
+        "upper": 53.20778637770899
+    },
+    "east_queue": {
+        "lower": 0.0,
+        "upper": 37.0
+    },
+    "east_arrivals": {
+        "lower": 0.0,
+        "upper": 3.0
+    },
+    "east_density": {
+        "lower": 0.0,
+        "upper": 74.2403314917127
+    },
+    "east_speed": {
+        "lower": 0.0,
+        "upper": 15.102769536525772
+    },
+    "east_pressure": {
+        "lower": 0.0,
+        "upper": 39.11220454545455
+    },
+    "west_waiting": {
+        "lower": 0.0,
+        "upper": 52.546341991342004
+    },
+    "west_queue": {
+        "lower": 0.0,
+        "upper": 35.0
+    },
+    "west_arrivals": {
+        "lower": 0.0,
+        "upper": 3.0
+    },
+    "west_density": {
+        "lower": 0.0,
+        "upper": 70.78729281767956
+    },
+    "west_speed": {
+        "lower": 0.0,
+        "upper": 15.096138809503373
+    },
+    "west_pressure": {
+        "lower": 0.0,
+        "upper": 37.81381997607656
+    }
+}

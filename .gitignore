@@ -1,0 +1,64 @@
+# =============================================================================
+# SynFlow — .gitignore
+# =============================================================================
+
+# --- Secrets & environment (NEVER commit these) ---
+.env
+.env.*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Dependencies ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# --- Build outputs ---
+dist/
+build/
+*.next/
+out/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Docker ---
+.dockerignore
+
+# --- IDE & OS ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Project-specific outputs ---
+Result/
+matched_experiments/
+*.log
+
+# --- Git ---
+.git/
+
+# --- Misc ---
+*.pdf
+*.xml
+tripinfo_*.xml
