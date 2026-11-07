@@ -1,0 +1,67 @@
+# =============================================================================
+# SynFlow — Docker build context exclusions (repository root context)
+# Keep runtime model + SUMO XML assets; exclude secrets, frontend, tooling.
+# =============================================================================
+
+# --- Git / CI ---
+.git
+.gitignore
+.github
+
+# --- Local-only container tooling (Render uses the backend Dockerfile) ---
+/docker-compose.yml
+/docker-compose.yaml
+/compose.yml
+/compose.yaml
+/entrypoint.sh
+/Dockerfile
+/Dockerfile.*
+
+# --- Secrets & credentials (never in the image) ---
+.env
+.env.*
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/credentials*
+**/*secret*
+**/*token*
+
+# --- Dependencies / virtual environments (installed inside the image) ---
+**/node_modules
+**/.venv
+**/venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.mypy_cache
+
+# --- OS / editor noise ---
+**/.DS_Store
+**/Thumbs.db
+**/.idea
+**/.vscode
+
+# --- Logs / builds / coverage ---
+**/*.log
+**/coverage
+**/dist
+**/build
+
+# --- Not needed at runtime ---
+SynFlow Complete Frontend
+synflow-nn.ipynb
+data_generation
+README.md
+DEPENDENCIES.md
+DEPLOYMENT.md
+LICENSE
+
+# --- Generated simulation outputs ---
+**/Result
+Synflow Complete Backend/matched_experiments
+**/tripinfo*.xml
+Synflow Complete Backend/engine/tripinfo_runtime.xml

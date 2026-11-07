@@ -1,9 +1,16 @@
-# Python dependencies for SynFlow engine (SUMO/TraCI controllers)
-# SUMO itself is a system binary, NOT a pip package.
-# Install SUMO separately: apt install sumo (Linux) or download from sumo.dlr.de (Windows)
-numpy
-pandas
-torch
-joblib
+# Python dependencies for the SynFlow engine (SUMO/TraCI controllers).
+# SUMO itself is a system binary, not a pip package (SUMO_HOME=/usr/share/sumo
+# in the deployment image).
+#
+# scikit-learn is pinned to 1.6.1 because engine/Model/preprocessor.joblib
+# was serialized with that version.
+# In Docker, CPU-only torch (2.4.1+cpu) is installed first; torch==2.4.1 here
+# accepts that build and does not replace it with a CUDA wheel.
+
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+joblib==1.4.2
 scikit-learn==1.6.1
-traci
+torch==2.4.1
+traci==1.27.1

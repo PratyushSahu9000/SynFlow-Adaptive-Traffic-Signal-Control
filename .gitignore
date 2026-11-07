@@ -72,3 +72,12 @@ matched_experiments/
 *.pdf
 *.xml
 tripinfo_*.xml
+
+# --- Deployment files that MUST be tracked for Render ---
+!/.dockerignore
+!/Synflow Complete Backend/Dockerfile
+!/Synflow Complete Backend/server/package-lock.json
+
+# --- SUMO runtime assets required by the simulation ---
+!/Synflow Complete Backend/engine/SUMO/
+!/Synflow Complete Backend/engine/SUMO/**

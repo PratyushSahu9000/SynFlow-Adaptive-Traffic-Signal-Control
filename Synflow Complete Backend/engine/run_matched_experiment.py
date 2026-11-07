@@ -21,7 +21,7 @@ SEED_MAX = 2_000_000_000
 
 def parse_args():
     p = argparse.ArgumentParser(description='Run matched Fixed + NN + NeSy SUMO experiments.')
-    p.add_argument('--project', type=Path, default=Path('.'))
+    p.add_argument('--project', type=Path, default=Path(__file__).resolve().parent)
     p.add_argument('--sumocfg', type=Path, default=DEFAULT_SUMOCFG)
     p.add_argument('--model', type=Path, default=DEFAULT_MODEL)
     p.add_argument('--preprocessor', type=Path, default=DEFAULT_PREPROCESSOR)
@@ -69,6 +69,10 @@ def start_controller(name, script, seed, output, sumocfg, model, preprocessor, s
     ]
     if name in ('nn', 'nesy'):
         cmd += ['--model', str(model), '--preprocessor', str(preprocessor)]
+    if name == 'fixed':
+        # Keep tripinfo inside this experiment's output directory instead of
+        # the shared engine working directory (concurrent-run isolation).
+        cmd += ['--tripinfo-output', str(output.with_name(f'tripinfo_{output.stem}.xml'))]
     if quiet:
         cmd.append('--quiet')
 

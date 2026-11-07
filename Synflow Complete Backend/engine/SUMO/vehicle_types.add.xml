@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<additional>
+
+    
+
+    <vType
+        id="ambulance"
+        vClass="emergency"
+        length="5.2"
+        width="2.0"
+        minGap="2.0"
+        accel="3.0"
+        decel="5.0"
+        emergencyDecel="8.0"
+        sigma="0.3"
+        maxSpeed="22.22"
+        speedFactor="1.05"
+        speedDev="0.05"
+    />
+
+    <vType
+        id="firetruck"
+        vClass="emergency"
+        length="8.0"
+        width="2.5"
+        minGap="2.5"
+        accel="2.0"
+        decel="4.5"
+        emergencyDecel="7.5"
+        sigma="0.3"
+        maxSpeed="16.67"
+        speedFactor="1.0"
+        speedDev="0.05"
+    />
+
+    <vType
+        id="police"
+        vClass="emergency"
+        length="4.8"
+        width="1.9"
+        minGap="2.0"
+        accel="3.2"
+        decel="5.0"
+        emergencyDecel="8.0"
+        sigma="0.3"
+        maxSpeed="22.22"
+        speedFactor="1.05"
+        speedDev="0.05"
+    />
+
+</additional>
