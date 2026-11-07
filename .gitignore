@@ -38,8 +38,18 @@ ENV/
 .installed.cfg
 *.egg
 
-# --- Docker ---
+# --- Docker (kept local only, never pushed) ---
 .dockerignore
+Dockerfile
+Dockerfile.*
+*.dockerfile
+docker-compose.yml
+docker-compose.yaml
+compose.yml
+compose.yaml
+entrypoint.sh
+docker/
+.docker/
 
 # --- IDE & OS ---
 .idea/
