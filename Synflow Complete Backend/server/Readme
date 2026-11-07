@@ -1,1 +1,99 @@
 
+# SynFlow Server
+
+Backend for SynFlow, an adaptive traffic signal control project. It runs one experiment at a time with the same seed for three controllers: Fixed, NN and NeSy. It then stores the results and compares them.
+
+## Tech Used
+
+- Node.js
+- Express
+- MongoDB with Mongoose
+- Python engine (runs the traffic simulation)
+
+## How It Works
+
+1. A POST request creates an experiment in MongoDB with status `running`.
+2. The server starts the Python script `run_matched_experiment_three.py` in the background.
+3. Python creates the seed and writes `fixed.json`, `nn.json` and `nesy.json`.
+4. The server reads these files, saves them in MongoDB and marks the experiment `completed`.
+5. If anything fails, the status becomes `failed` and the error is saved.
+
+## Setup
+
+1. Install packages
+
+```
+npm install
+```
+
+2. Copy `.env_example.example` to `.env` and fill in your values
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+PYTHON_CMD=../../.venv/Scripts/python.exe
+RUNNER_PATH=../engine/run_matched_experiment_three.py
+RESULTS_DIR=../Result
+```
+
+3. Start the server
+
+```
+npm start
+```
+
+## Environment Variables
+
+| Name | Meaning |
+|------|---------|
+| PORT | Port for the server. Default is 5000 |
+| MONGO_URI | MongoDB connection string |
+| PYTHON_CMD | Path to the Python executable |
+| RUNNER_PATH | Path to `run_matched_experiment_three.py` |
+| RESULTS_DIR | Folder where Python saves the results |
+
+## API Routes
+
+Base path: `/api/experiments`
+
+| Method | Route | What it does |
+|--------|-------|--------------|
+| POST | `/` | Start a new experiment |
+| GET | `/` | List all experiments without results |
+| GET | `/:id` | Get one experiment with Fixed, NN and NeSy results |
+| GET | `/:id/compare` | Get comparison metrics (only when completed) |
+| GET | `/:id/stream` | Live progress using Server-Sent Events |
+
+## Compared Metrics
+
+- average_waiting_time
+- average_queue_length
+- average_speed
+- avg_time_loss
+- avg_duration
+- throughput
+
+For each metric, the compare route returns the value of all three controllers. It also returns how much better NN and NeSy are than Fixed, in percent.
+
+## Experiment Status
+
+- `running`: the experiment is in progress
+- `completed`: the results are ready
+- `failed`: something went wrong, see the `error` field
+
+If the server restarts while an experiment is running, that experiment is marked `failed`.
+
+## Folder Structure
+
+```
+server/
+  models/
+    Experiment.js
+  routes/
+    experiments.js
+  services/
+    compare.js
+    runner.js
+  server.js
+  package.json
+```
