@@ -62,6 +62,7 @@ COPY ["Synflow Complete Backend/server/package.json", "Synflow Complete Backend/
 RUN npm ci --omit=dev && npm cache clean --force
 
 COPY ["Synflow Complete Backend/server/server.js", "/app/server/"]
+COPY ["Synflow Complete Backend/server/config.js", "/app/server/"]
 COPY ["Synflow Complete Backend/server/models/", "/app/server/models/"]
 COPY ["Synflow Complete Backend/server/routes/", "/app/server/routes/"]
 COPY ["Synflow Complete Backend/server/services/", "/app/server/services/"]

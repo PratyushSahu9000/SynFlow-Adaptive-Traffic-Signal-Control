@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { api } from './api';
+import { describeStartError } from './lib/startError';
 
 const Ctx = createContext(null);
 export const useExp = () => useContext(Ctx);
@@ -10,6 +11,8 @@ export function ExperimentProvider({ children }) {
   const [exp, setExp] = useState(null);
   const [cmp, setCmp] = useState(null);
   const [error, setError] = useState('');
+  const [starting, setStarting] = useState(false);
+  const [startNotice, setStartNotice] = useState(null);
 
   const refreshList = useCallback(async () => {
     try {
@@ -49,14 +52,21 @@ export function ExperimentProvider({ children }) {
         }
         if (e.status === 'running') {
           es = new EventSource(api.streamUrl(id));
+          let sseErrors = 0;
           es.onmessage = (m) => {
+            sseErrors = 0;
             const d = JSON.parse(m.data);
             if (d.type === 'progress') return;
             es.close();
             load();
             refreshList();
           };
-          es.onerror = () => es.close();
+          // EventSource reconnects automatically. Stop only after repeated
+          // failures so a transient network drop recovers without polling.
+          es.onerror = () => {
+            sseErrors += 1;
+            if (sseErrors >= 5) es.close();
+          };
         }
       } catch (err) {
         if (!cancelled) setError(err.message);
@@ -70,14 +80,28 @@ export function ExperimentProvider({ children }) {
   }, [id, refreshList]);
 
   const start = async () => {
+    if (starting) return;
+    setStarting(true);
+    setStartNotice(null);
+
     try {
       const r = await api.start();
       await refreshList();
       setId(r.id);
+      setError('');
     } catch (e) {
-      setError(e.message);
+      // 409/429/503 are shown as a friendly notice. No automatic retry.
+      setStartNotice(describeStartError(e));
+    } finally {
+      setStarting(false);
     }
   };
 
-  return <Ctx.Provider value={{ list, id, setId, exp, cmp, error, start }}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider
+      value={{ list, id, setId, exp, cmp, error, start, starting, startNotice }}
+    >
+      {children}
+    </Ctx.Provider>
+  );
 }

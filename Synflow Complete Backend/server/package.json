@@ -7,12 +7,18 @@
     "node": ">=22"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node --test"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^8.7.3",
+    "helmet": "^8.3.0",
     "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
   }
 }
