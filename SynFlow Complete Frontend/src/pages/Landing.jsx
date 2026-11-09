@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useExp } from '../ExperimentContext';
 import { COLORS, NAMES, METRIC } from '../components/Common';
-
-// 👉 Replace with your own demo video URL (mp4). It shows in its own section, not as a background.
-const VIDEO_URL = '../video/WhatsApp Video 2026-10-12 at 2.26.15 PM.mp4';
+import demoVideoUrl from '../../video/WhatsApp Video 2026-10-12 at 2.26.15 PM.mp4';
 
 const CARDS = [
   ['fixed', 'Every approach waits the same fixed time, even when one lane is packed and another is empty.', '/fixed'],
@@ -45,7 +43,17 @@ export default function Landing() {
       <div className="page">
         <h2>See it in action</h2>
         <div className="video-box">
-          <video src={VIDEO_URL} autoPlay loop muted playsInline />
+          <video
+            src={demoVideoUrl}
+            autoPlay
+            loop
+            muted
+            playsInline
+            controls
+            preload="metadata"
+          >
+            Your browser does not support HTML video.
+          </video>
         </div>
 
         <h2>Three ways to run one intersection</h2>
