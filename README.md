@@ -99,24 +99,13 @@ For this run, the dashboard reports a mean improvement of **35.5% for NN** and *
 
 **Controller comparison overview**
 
-![Matched controller comparison overview](assets/results/controller-comparison-overview.jpg)
-
 **Improvement over the Fixed baseline**
-
-![Improvement over Fixed for the six simulation metrics](assets/results/improvement-over-fixed.jpg)
 
 **Metric-by-metric controller values**
 
-![Metric-by-metric Fixed, NN, and NeSy results](assets/results/metric-by-metric.jpg)
-
 **Directional queue length and throughput**
 
-![Directional queue length and throughput comparison](assets/results/directional-results.jpg)
-
 **Controller behaviour and complete metric table**
-
-![Controller behaviour and all metrics](assets/results/controller-behaviour-and-all-metrics.jpg)
-
 
 ## How the system works
 
@@ -404,6 +393,8 @@ SynFlow-Adaptive-Traffic-Signal-Control/
 | Database | MongoDB, Mongoose | Experiment metadata and result storage |
 | Frontend | React, Vite | Interactive experiment dashboard |
 | Visualization | Recharts | Metric charts and controller comparisons |
+
+The matched-run values above are the reference results for this example seed. The dashboard is a local visualization of experiment outputs; it is not required to reproduce the underlying simulation or metrics.
 
 ## Reproducing the research on another machine
 
