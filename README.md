@@ -32,6 +32,8 @@ All three controllers are evaluated using the same SUMO random seed for a given 
 
 > **Project status:** SynFlow is a research and engineering prototype evaluated in simulation. It is not certified or validated for deployment on public-road traffic infrastructure.
 
+> **Research project — not a live website:** The dashboard is an experimental interface intended to be run locally alongside the simulation backend. There is no maintained public production deployment or always-available hosted demo. A temporary Render deployment may be unavailable or unreliable under free-tier compute limits; it is not the supported way to use or reproduce this project. The intended workflow is to clone the repository, configure the required local dependencies and SUMO assets, and run the experiments on the researcher's own machine.
+
 ## What SynFlow includes
 
 - A four-approach intersection model controlled through SUMO and TraCI.
@@ -75,6 +77,35 @@ These are **ML target-prediction metrics**, not evidence of a 95.89% reduction i
 | Optuna search trials | 25 |
 
 The scenario-level split keeps observations from a scenario within one partition instead of randomly distributing rows from the same scenario across training, validation, and test sets.
+
+### Matched simulation comparison (illustrative run)
+
+The dashboard screenshots below show one matched SUMO experiment using **seed 1086422237** for Fixed, Neural Network, and Neuro-Symbolic controllers. These values are from that displayed run, not an average across multiple random seeds.
+
+| Metric | Fixed | Neural Network | Neuro-Symbolic | NN vs Fixed | NeSy vs Fixed |
+|---|---:|---:|---:|---:|---:|
+| Average waiting time (s) | 9.48 | 2.92 | 4.65 | 69.2% lower | 51.0% lower |
+| Average queue length (vehicles) | 4.51 | 1.04 | 1.86 | 77.0% lower | 58.8% lower |
+| Average speed (m/s) | 9.70 | 10.73 | 10.44 | 10.6% higher | 7.7% higher |
+| Average time loss (s) | 16.43 | 9.51 | 11.14 | 42.1% lower | 32.2% lower |
+| Average trip duration (s) | 50.78 | 43.75 | 45.41 | 13.8% lower | 10.6% lower |
+| Throughput (vehicles) | 1,776 | 1,780 | 1,777 | 0.2% higher | 0.1% higher |
+
+For this run, the dashboard reports a mean improvement of **35.5% for NN** and **26.7% for NeSy** across these six metrics, with the direction of improvement adjusted so lower-is-better and higher-is-better metrics can be combined. NN achieved the best value on all six displayed metrics in this particular run. The NN controller made 507 signal switches; NeSy made 237 and recorded **289 symbolic overrides out of 720 MLP decisions (40.1%)**.
+
+**How to interpret this result:** this is a single-seed simulation snapshot. It demonstrates the behavior of the implementation under one generated traffic realization; it does not establish statistical significance or prove that NN will outperform NeSy across other seeds, traffic demand levels, intersection layouts, or real roads. For research conclusions, repeat matched experiments across multiple seeds and report per-seed results and aggregate variability.
+
+#### Dashboard result screenshots
+
+**Controller comparison overview**
+
+**Improvement over the Fixed baseline**
+
+**Metric-by-metric controller values**
+
+**Directional queue length and throughput**
+
+**Controller behaviour and complete metric table**
 
 ## How the system works
 
@@ -362,6 +393,27 @@ SynFlow-Adaptive-Traffic-Signal-Control/
 | Database | MongoDB, Mongoose | Experiment metadata and result storage |
 | Frontend | React, Vite | Interactive experiment dashboard |
 | Visualization | Recharts | Metric charts and controller comparisons |
+
+The matched-run values above are the reference results for this example seed. The dashboard is a local visualization of experiment outputs; it is not required to reproduce the underlying simulation or metrics.
+
+## Reproducing the research on another machine
+
+SynFlow is intended to be reproduced as a local simulation experiment, not accessed as a hosted website. The reproducible research unit is the **matched SUMO run**: Fixed, NN, and NeSy each run in separate SUMO processes with the same traffic seed and SUMO configuration.
+
+A practical reproduction sequence is:
+
+1. Clone the repository and create the Python environment using the pinned requirements.
+2. Install SUMO and make its command-line binary available to the shell running the controllers.
+3. Supply the network, route, and vehicle-type assets referenced by `intersection.sumocfg`. These simulation inputs are not included in the current repository snapshot.
+4. Keep the saved model and preprocessing artifacts together, and use scikit-learn 1.6.1 when loading `preprocessor.joblib`.
+5. Run the matched experiment runner from the engine directory. It generates and shares a seed across the three controllers for each run.
+6. Preserve the generated `manifest.json`, seed-specific `fixed.json`, `nn.json`, and `nesy.json` outputs, along with the exact SUMO configuration and asset versions used.
+
+The runner generates a random seed for each run; the manifest records the seed and output paths. To repeat a specific recorded traffic realization, use that recorded seed with each controller's `--seed` argument and the same SUMO configuration and input assets. To assess generalization rather than reproduce one run, execute multiple matched seeds and summarize the distribution of outcomes.
+
+**Current reproducibility boundary:** the README documents the intended workflow and the checked-in code/model artifacts, but a clean clone is not yet fully self-contained because the referenced SUMO network, route, and vehicle-type files are missing. The dataset generator also contains machine-specific paths, and the notebook's data-loading cell points to a Kaggle path; both need local configuration before dataset generation or model retraining. These are explicit setup requirements, not steps performed by a remote website.
+
+The React/Vite frontend and Node/Express backend are optional local research interfaces for launching and inspecting experiments. They require a reachable MongoDB instance and local Python/SUMO setup. They are not required to understand the controllers or run the Python matched-experiment pipeline directly.
 
 ## Getting started
 
